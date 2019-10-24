@@ -1,0 +1,8 @@
+name: Rule-based PR manager
+description: PR operates multiple Pull Request
+branding:
+  icon: git-pull-request
+  color: red
+runs:
+  using: docker
+  image: ./merge/Dockerfile
