@@ -1,10 +1,10 @@
 #!/bin/sh
 
-if [ "$PR_EXIT_CODE" == "true" ]; then
+if [ "$PR_EXIT_CODE" = "true" ]; then
   args=" --exit-code"
 fi
 
-if [ "$PR_NO_EXIT_CODE" == "true" ]; then
+if [ "$PR_NO_EXIT_CODE" = "true" ]; then
   args=" --no-exit-code"
 fi
 
