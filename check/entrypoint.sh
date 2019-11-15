@@ -1,16 +1,16 @@
 #!/bin/sh
 
 if [ "$PR_EXIT_CODE" = "true" ]; then
-  args=" --exit-code"
+  exit_code="--exit-code"
 fi
 
 if [ "$PR_NO_EXIT_CODE" = "true" ]; then
-  args=" --no-exit-code"
+  no_exit_code="--no-exit-code"
 fi
 
 if [ -n "$PR_RATE" ]; then
-  args=" --rate $PR_RATE"
+  rate="--rate $PR_RATE"
 fi
 
-exec /usr/local/bin/pr "$args" check "${GITHUB_REPOSITORY}" "$@"
+exec /usr/local/bin/pr $exit_code $no_exit_code $rate check "${GITHUB_REPOSITORY}" "$@"
 
