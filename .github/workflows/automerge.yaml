@@ -1,29 +1,41 @@
-name: Automerge from PR Event
+name: Automerge
 on:
   pull_request:
     types:
+      - assigned
+      - unassigned
       - labeled
       - unlabeled
-      - synchronize
       - opened
       - edited
-      - ready_for_review
       - reopened
-      - unlocked
+      - synchronize
+      - ready_for_review
+      - review_requested
+      - review_request_removed
   pull_request_review:
     types:
       - submitted
+  pull_request_review_comment:
+    types:
+      - created
+      - edited
   status: {}
 jobs:
   merge:
-    name: merge
+    name: Summary
     runs-on: ubuntu-18.04
     steps:
-      - name: Set Value
-        id: set_pr_number
-        run: echo ::set-output name=number::$(echo $GITHUB_REF | awk -F / '{print $3}')
-      - uses: ./
+      - uses: actions/checkout@v1
+      - uses: ./validate
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NO_EXIT_CODE: true
         with:
-          args: -l "number == `${{ steps.set_pr_number.outputs.number }}`" -l "state == `\"open\"`" -l "user.login == `\"github-actions[bot]\"`"
+          args: -l "state == `\"open\"`" -l "base.ref == `\"master\"`" -l "starts_with(head.ref, `\"mod-up-\"`)" -l "user.login == `\"github-actions[bot]\"`"
+      - uses: ./check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NO_EXIT_CODE: true
+        with:
+          args: --merge -l "state == `\"open\"`" -l "base.ref == `\"master\"`" -l "starts_with(head.ref, `\"mod-up-\"`)" -l "user.login == `\"github-actions[bot]\"`"

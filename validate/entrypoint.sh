@@ -12,4 +12,4 @@ if [ -n "${PR_RATE}" ]; then
   args="${args} --rate $PR_RATE"
 fi
 
-exec /usr/local/bin/pr ${args} show "${GITHUB_REPOSITORY}" "$@"
+exec /usr/local/bin/pr ${args} validate "${GITHUB_REPOSITORY}" "$@"

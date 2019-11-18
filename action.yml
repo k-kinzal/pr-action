@@ -5,4 +5,4 @@ branding:
   color: red
 runs:
   using: docker
-  image: ./merge/Dockerfile
+  image: ./check/Dockerfile
