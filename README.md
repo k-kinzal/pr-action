@@ -47,6 +47,15 @@ jobs:
 See [here](https://github.com/k-kinzal/pr) for what to specify for args.
 If args is omitted, try to merge all PRs.
 
+#### Environment variables
+
+There is an environment variable corresponding to the global flag of PR CLI.
+See the PR CLI help for details.
+
+* PR_EXIT_CODE
+* PR_NO_EXIT_CODE
+* PR_RATE
+
 ### Debug
 
 ```yaml
