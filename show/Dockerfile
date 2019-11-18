@@ -1,4 +1,4 @@
-FROM kinzal/pr:0.1.0
+FROM kinzal/pr:0.2.0
 
 LABEL "maintainer"="k-kinzal <log@logn.in>"
 LABEL "repository"="https://github.com/k-kinzal/pr-action"
