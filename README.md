@@ -30,18 +30,16 @@ jobs:
     name: merge
     runs-on: ubuntu-18.04
     steps:
-      - name: Set Value
-        id: set_pr_number
-        run: echo ::set-output name=number::$(echo $GITHUB_REF | awk -F / '{print $3}')
       - uses: k-kinzal/pr-action/merge@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: -l "number == `${{ steps.set_pr_number.outputs.number }}`" -l "state == `\"open\"`" -l "user.login == `\"github-actions[bot]\"`"
+          args: -l "state == `\"open\"`" -l "user.login == `\"github-actions[bot]\"`"
 ```
 
 See [here](https://github.com/k-kinzal/pr) for what to specify for args.
 If args is omitted, try to merge all PRs.
+
 
 ### Debug
 
@@ -54,14 +52,11 @@ jobs:
     name: debug
     runs-on: ubuntu-18.04
     steps:
-      - name: Set Value
-        id: set_pr_number
-        run: echo ::set-output name=number::$(echo $GITHUB_REF | awk -F / '{print $3}')
       - uses: k-kinzal/pr-action/show@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: -l "number == `${{ steps.set_pr_number.outputs.number }}`" -l "state == `\"open\"`" -l "user.login == `\"github-actions[bot]\"`"
+          args: -l "state == `\"open\"`" -l "user.login == `\"github-actions[bot]\"`"
 ```
 
 If you need debugging, you can get a list of targeted PRs by passing `k-kinzal/pr-action/show`.
