@@ -13,24 +13,24 @@ name: Automerge
 on:
   pull_request:
     types:
-    - assigned
-    - unassigned
-    - labeled
-    - unlabeled
-    - opened
-    - edited
-    - reopened
-    - synchronize
-    - ready_for_review
-    - review_requested
-    - review_request_removed
+      - assigned
+      - unassigned
+      - labeled
+      - unlabeled
+      - opened
+      - edited
+      - reopened
+      - synchronize
+      - ready_for_review
+      - review_requested
+      - review_request_removed
   pull_request_review:
     types:
-    - submitted
+      - submitted
   pull_request_review_comment:
     types:
-    - created
-    - edited
+      - created
+      - edited
   status: {}
 jobs:
   merge:
@@ -41,7 +41,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: --merge -l "state == `\"open\"`" -l "user.login == `\"github-actions[bot]\"`"
+          args: -l "state == `\"open\"`" -l "base.ref == `\"master\"`" -l "starts_with(head.ref, `\"mod-up-\"`)" -l "user.login == `\"github-actions[bot]\"`"
 ```
 
 See [here](https://github.com/k-kinzal/pr) for what to specify for args.
@@ -59,7 +59,7 @@ See the PR CLI help for details.
 ### Debug
 
 ```yaml
-name: Automerge from PR Event
+name: Automerge
 on:
   pull_request
 jobs:

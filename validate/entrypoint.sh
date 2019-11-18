@@ -1,15 +1,15 @@
 #!/bin/sh
 
 if [ "${PR_EXIT_CODE}" = "true" ]; then
-  exit_code_flag="--exit-code"
+  args="${args} --exit-code"
 fi
 
 if [ "${PR_NO_EXIT_CODE}" = "true" ]; then
-  no_exit_code_flag="--no-exit-code"
+  args="${args} --no-exit-code"
 fi
 
 if [ -n "${PR_RATE}" ]; then
-  rate_flag="--rate $PR_RATE"
+  args="${args} --rate $PR_RATE"
 fi
 
-exec /usr/local/bin/pr "${exit_code_flag}" "${no_exit_code_flag}" "${rate_flag}" validate "${GITHUB_REPOSITORY}" "$@"
+exec /usr/local/bin/pr ${args} validate "${GITHUB_REPOSITORY}" "$@"
