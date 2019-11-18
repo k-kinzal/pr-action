@@ -9,37 +9,43 @@ This GitHub Action runs the [pr](https://github.com/k-kinzal/pr) for operates mu
 Below is a simple snippet to use this action. A [live example](https://github.com/k-kinzal/pr-action/blob/master/.github/workflows/automerge.yaml) is also available for this repository.
 
 ```yaml
-name: Automerge from PR Event
+name: Automerge
 on:
   pull_request:
     types:
-      - labeled
-      - unlabeled
-      - synchronize
-      - opened
-      - edited
-      - ready_for_review
-      - reopened
-      - unlocked
+    - assigned
+    - unassigned
+    - labeled
+    - unlabeled
+    - opened
+    - edited
+    - reopened
+    - synchronize
+    - ready_for_review
+    - review_requested
+    - review_request_removed
   pull_request_review:
     types:
-      - submitted
+    - submitted
+  pull_request_review_comment:
+    types:
+    - created
+    - edited
   status: {}
 jobs:
   merge:
-    name: merge
+    name: Summary
     runs-on: ubuntu-18.04
     steps:
-      - uses: k-kinzal/pr-action/merge@master
+      - uses: k-kinzal/pr-action/check@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: -l "state == `\"open\"`" -l "user.login == `\"github-actions[bot]\"`"
+          args: --merge -l "state == `\"open\"`" -l "user.login == `\"github-actions[bot]\"`"
 ```
 
 See [here](https://github.com/k-kinzal/pr) for what to specify for args.
 If args is omitted, try to merge all PRs.
-
 
 ### Debug
 
@@ -52,11 +58,18 @@ jobs:
     name: debug
     runs-on: ubuntu-18.04
     steps:
-      - uses: k-kinzal/pr-action/show@master
+      - uses: k-kinzal/pr-action/validate@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           args: -l "state == `\"open\"`" -l "user.login == `\"github-actions[bot]\"`"
 ```
 
-If you need debugging, you can get a list of targeted PRs by passing `k-kinzal/pr-action/show`.
+**output**
+```
+[x] state == `"open"`: 100 PRs matched the rules
+[ ] user.login == `"github-actions[bot]"`: no PR matches the rule
+[...]
+```
+
+If you need debugging, you can get a rule match and list of targeted PRs by passing `k-kinzal/pr-action/validate`.
