@@ -6,7 +6,7 @@ This GitHub Action runs the [pr](https://github.com/k-kinzal/pr) for operates mu
 
 ### Merge
 
-Below is a simple snippet to use this action. A [live example](https://github.com/k-kinzal/pr-action/blob/master/.github/workflows/automerge.yaml) is also available for this repository.
+Below is a simple snippet to use this action. A [live example](https://github.com/k-kinzal/pr-action/blob/main/.github/workflows/automerge.yaml) is also available for this repository.
 
 ```yaml
 name: Automerge
@@ -37,11 +37,11 @@ jobs:
     name: Summary
     runs-on: ubuntu-18.04
     steps:
-      - uses: k-kinzal/pr-action/check@master
+      - uses: k-kinzal/pr-action/check@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: -l "state == `\"open\"`" -l "base.ref == `\"master\"`" -l "starts_with(head.ref, `\"mod-up-\"`)" -l "user.login == `\"github-actions[bot]\"`"
+          args: -l "state == `\"open\"`" -l "base.ref == `\"main\"`" -l "starts_with(head.ref, `\"mod-up-\"`)" -l "user.login == `\"github-actions[bot]\"`"
 ```
 
 See [here](https://github.com/k-kinzal/pr) for what to specify for args.
@@ -67,7 +67,7 @@ jobs:
     name: debug
     runs-on: ubuntu-18.04
     steps:
-      - uses: k-kinzal/pr-action/validate@master
+      - uses: k-kinzal/pr-action/validate@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
